@@ -1,0 +1,88 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== 이름
+
+aptkeyman - 서드파티 APT OpenPGP 키 관리
+
+== 개요
+
+*aptkeyman* _명령_ [_옵션_]...
+
+== 설명
+
+*aptkeyman* 은 APT 저장소 서명 키의 로컬 SQLite 데이터베이스
+(이름, URL 패턴, 지문, 키 URL, 블롭, 수락/거부 상태)를 유지합니다.
+`/etc/apt/sources.list` 와 `sources.list.d` 를 검사하고, 누락된
+키링을 다운로드하며, `/usr/share/keyrings`, `/etc/apt/keyrings`,
+`apt-get update` 누락 키 오류에서 시드할 수 있습니다.
+
+일반 흐름:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== 명령
+
+*download*::
+  수락되었고 apt 소스와 일치하는 사실의 누락 키링을 다운로드·설치합니다.
+  동시 가져오기(`-j`/`--jobs`).
+  프록시: `http_proxy`/`https_proxy`/`no_proxy` 또는
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  키별 `proxy_mode`: auto / always / never / 명시 URL.
+
+*update*::
+  소스 목록에 쓰인 모든 키를 갱신(동시; 프록시는 *download* 와 동일)한 뒤
+  더 이상 참조되지 않는 관리 키를 제거합니다. `keyurl` 이 없으면 저장된
+  블롭을 유지합니다.
+
+*verify*::
+  디스크의 키링을 DB 지문과 대조합니다.
+
+*seed*::
+  패키지 well-known 키, 로컬 keyring 디렉터리, 선택적 `apt-get update`
+  진단(`--apt-update` 또는 `--apt-log`)으로 DB 를 시드합니다.
+
+*scan*::
+  apt 소스와 일치하는 DB 사실을 표시합니다.
+
+*list*, *show*, *accept*, *deny*, *add*, *fetch*::
+  키 사실 조회·편집.
+
+*export*, *import*::
+  JSON 키 DB 덤프 또는 병합.
+
+*gui*::
+  wxPython 창 열기(`python3-wxgtk4.0` 필요).
+
+*version*, *help*::
+  버전 정보와 사용법.
+
+== 파일
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  사용자별 키 사실 DB.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  패키지된 well-known 항목.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  사전 구축 DB(네트워크 빌드 시 블롭 포함).
+
+`/etc/apt/keyrings/`::
+  설치된 키링의 기본 위치.
+
+== 저자
+
+{project-author} <{project-email}> 작성.
+
+== 저작권
+
+Copyright (C) {project-year} {project-author}.
+라이선스 AGPL-3.0-or-later.

@@ -1,0 +1,88 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== الاسم
+
+aptkeyman - إدارة مفاتيح APT OpenPGP التابعة لطرف ثالث
+
+== الملخص
+
+*aptkeyman* _أمر_ [_خيار_]...
+
+== الوصف
+
+يحتفظ *aptkeyman* بقاعدة SQLite محلية لمفاتيح توقيع مستودعات APT
+(الاسم، نمط الرابط، البصمة، رابط المفتاح، البيانات، حالة القبول/الرفض).
+يفحص `/etc/apt/sources.list` و`sources.list.d`، وينزّل حلقات المفاتيح
+الناقصة، ويمكنه البذر من `/usr/share/keyrings` و`/etc/apt/keyrings`
+وأخطاء المفتاح الناقص في `apt-get update`.
+
+التدفق النموذجي:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== الأوامر
+
+*download*::
+  تنزيل وتثبيت حلقات المفاتيح الناقصة للحقائق المقبولة المطابقة لمصادر apt.
+  تنزيلات متزامنة (`-j`/`--jobs`).
+  الوكيل: `http_proxy`/`https_proxy`/`no_proxy` أو
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  `proxy_mode` لكل مفتاح: auto / always / never / رابط صريح.
+
+*update*::
+  تحديث كل المفاتيح المستخدمة في قوائم المصادر (متزامن؛ نفس خيارات الوكيل
+  كـ *download*) ثم إزالة المفاتيح المُدارة غير المُشار إليها.
+  بدون `keyurl` يُحتفظ بالبيانات المخزّنة.
+
+*verify*::
+  التحقق من حلقات المفاتيح على القرص مقابل البصمات في قاعدة البيانات.
+
+*seed*::
+  بذر القاعدة من مفاتيح well-known المعبأة ودلائل keyring المحلية وتشخيصات
+  `apt-get update` الاختيارية (`--apt-update` أو `--apt-log`).
+
+*scan*::
+  عرض مصادر apt وحقائق القاعدة المطابقة.
+
+*list*، *show*، *accept*، *deny*، *add*، *fetch*::
+  فحص وتحرير حقائق المفاتيح.
+
+*export*، *import*::
+  تفريغ أو دمج قواعد JSON.
+
+*gui*::
+  فتح نافذة wxPython (يتطلب `python3-wxgtk4.0`).
+
+*version*، *help*::
+  معلومات الإصدار والاستخدام.
+
+== الملفات
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  قاعدة حقائق لكل مستخدم.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  إدخالات well-known المعبأة.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  قاعدة مسبقة البناء مع البيانات (عند البناء مع الشبكة).
+
+`/etc/apt/keyrings/`::
+  الوجهة الافتراضية لحلقات المفاتيح المثبتة.
+
+== المؤلف
+
+كتبه {project-author} <{project-email}>.
+
+== حقوق النشر
+
+Copyright (C) {project-year} {project-author}.
+الرخصة AGPL-3.0-or-later.

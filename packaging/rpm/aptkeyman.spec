@@ -7,7 +7,7 @@
 Name:           aptkeyman
 Version:        %{version}
 Release:        1%{?dist}
-Summary:        Meson-based CLI project template with example app
+Summary:        manage third-party APT OpenPGP keys
 
 License:        AGPL-3.0-or-later
 URL:            https://github.com/lenik/aptkeyman
@@ -21,11 +21,13 @@ BuildRequires:  gettext
 BuildRequires:  asciidoctor
 
 Requires:       python3
+Requires:       gnupg
 
 %description
-aptkeyman is a template repository for small Python command-line utilities.
-It currently ships the aptkeyman example application and Debian packaging
-metadata, and includes Python unittest integration.
+aptkeyman seeds a local SQLite database of repository signing keys from
+well-known publishers, /usr/share/keyrings, /etc/apt/keyrings, and
+apt-get update missing-key diagnostics. Commands download, update, and
+verify keyring files so apt-get update succeeds for configured sources.
 
 %prep
 %setup -q -n %{name}-%{srcversion}
@@ -46,9 +48,21 @@ meson install -C build --destdir=%{buildroot}
 
 %files
 %{_bindir}/aptkeyman
-%{_bindir}/common_lib.py
+%{_bindir}/commons.py
+%{_bindir}/aptkeyman_db.py
+%{_bindir}/aptkeyman_patterns.py
+%{_bindir}/aptkeyman_sources.py
+%{_bindir}/aptkeyman_fetch.py
+%{_bindir}/aptkeyman_progress.py
+%{_bindir}/aptkeyman_keys.py
+%{_bindir}/aptkeyman_proxy.py
+%{_bindir}/aptkeyman_seed.py
+%{_bindir}/aptkeyman_verify.py
+%{_bindir}/aptkeyman_gui.py
 %{_datadir}/bash-completion/completions/aptkeyman
 %{_mandir}/man1/aptkeyman.1*
+%{_mandir}/*/man1/aptkeyman.1*
+%{_datadir}/aptkeyman/
 %{_datadir}/doc/%{name}/
 %{_datadir}/locale/*/LC_MESSAGES/aptkeyman.mo
 

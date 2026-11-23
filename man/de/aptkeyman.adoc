@@ -1,0 +1,89 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== Name
+
+aptkeyman - Drittanbieter-APT-OpenPGP-Schlüssel verwalten
+
+== Übersicht
+
+*aptkeyman* _BEFEHL_ [_OPTION_]...
+
+== Beschreibung
+
+*aptkeyman* hält eine lokale SQLite-Datenbank mit APT-Repository-Signaturschlüsseln
+(Name, URL-Muster, Fingerabdruck, Schlüssel-URL, Blob, Accept/Deny-Status).
+Es scannt `/etc/apt/sources.list` und `sources.list.d`, lädt fehlende
+Schlüsselbunddateien herunter und kann aus `/usr/share/keyrings`,
+`/etc/apt/keyrings` sowie fehlenden Schlüsseln von `apt-get update` befüllen.
+
+Typischer Ablauf:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== Befehle
+
+*download*::
+  Lädt fehlende Schlüsselbunde für akzeptierte, zu APT-Quellen passende Fakten
+  herunter und installiert sie. Parallele Abrufe (`-j`/`--jobs`).
+  Proxy: `http_proxy`/`https_proxy`/`no_proxy` oder
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  Pro Schlüssel `proxy_mode`: auto / always / never / explizite URL.
+
+*update*::
+  Aktualisiert alle von Quellenlisten genutzten Schlüssel (parallel; gleiche
+  Proxy-Optionen wie *download*) und entfernt ungenutzte verwaltete Dateien.
+  Ohne `keyurl` bleibt der gespeicherte Blob erhalten.
+
+*verify*::
+  Prüft Schlüsselbunddateien auf der Platte gegen DB-Fingerabdrücke.
+
+*seed*::
+  Befüllt die DB aus paketierten well-known-Schlüsseln, lokalen Keyring-
+  Verzeichnissen und optionalen `apt-get update`-Diagnosen
+  (`--apt-update` oder `--apt-log`).
+
+*scan*::
+  Zeigt APT-Quellen und passende DB-Fakten.
+
+*list*, *show*, *accept*, *deny*, *add*, *fetch*::
+  Schlüsselfakten einsehen und bearbeiten.
+
+*export*, *import*::
+  JSON-Schlüsseldatenbanken ausgeben oder zusammenführen.
+
+*gui*::
+  Öffnet ein wxPython-Fenster (benötigt `python3-wxgtk4.0`).
+
+*version*, *help*::
+  Versionsinfo und Hilfe.
+
+== Dateien
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  Benutzerbezogene Schlüsselfakten-DB.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  Paketierte well-known-Einträge.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  Vorgebaute DB mit Blobs (bei Netzwerkbau).
+
+`/etc/apt/keyrings/`::
+  Standardziel für installierte Schlüsselbunde.
+
+== Autor
+
+Geschrieben von {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year} {project-author}.
+Lizenz AGPL-3.0-or-later.

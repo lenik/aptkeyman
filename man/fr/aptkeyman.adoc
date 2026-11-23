@@ -1,0 +1,89 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== Nom
+
+aptkeyman - gérer les clés OpenPGP APT tierces
+
+== Synopsis
+
+*aptkeyman* _COMMANDE_ [_OPTION_]...
+
+== Description
+
+*aptkeyman* tient une base SQLite locale des clés de signature des dépôts APT
+(nom, motif d'URL, empreinte, URL de clé, blob, état accepté/refusé).
+Il parcourt `/etc/apt/sources.list` et `sources.list.d`, télécharge les
+trousseaux manquants, et peut ensemencer depuis `/usr/share/keyrings`,
+`/etc/apt/keyrings` et les erreurs de clé manquante d'`apt-get update`.
+
+Flux typique :
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== Commandes
+
+*download*::
+  Télécharge et installe les trousseaux manquants pour les faits acceptés
+  correspondant aux sources apt. Téléchargements concurrents (`-j`/`--jobs`).
+  Proxy : `http_proxy`/`https_proxy`/`no_proxy` ou
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  `proxy_mode` par clé : auto / always / never / URL explicite.
+
+*update*::
+  Rafraîchit toutes les clés des listes de sources (concurrents ; mêmes
+  options proxy que *download*), puis purge les clés gérées non référencées.
+  Sans `keyurl`, le blob stocké est conservé.
+
+*verify*::
+  Vérifie les trousseaux sur disque par rapport aux empreintes de la base.
+
+*seed*::
+  Ensemence la base depuis les clés well-known empaquetées, les répertoires
+  de trousseaux locaux, et les diagnostics optionnels d'`apt-get update`
+  (`--apt-update` ou `--apt-log`).
+
+*scan*::
+  Affiche les sources apt et les faits de base correspondants.
+
+*list*, *show*, *accept*, *deny*, *add*, *fetch*::
+  Inspecter et modifier les faits de clés.
+
+*export*, *import*::
+  Exporter ou fusionner des bases JSON.
+
+*gui*::
+  Ouvre une fenêtre wxPython (nécessite `python3-wxgtk4.0`).
+
+*version*, *help*::
+  Informations de version et usage.
+
+== Fichiers
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  Base de faits par utilisateur.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  Entrées d'éditeurs well-known empaquetées.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  Base préconstruite avec blobs (si construite avec réseau).
+
+`/etc/apt/keyrings/`::
+  Destination par défaut des trousseaux installés.
+
+== Auteur
+
+Écrit par {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year} {project-author}.
+Licence AGPL-3.0-or-later.

@@ -1,0 +1,89 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== Nombre
+
+aptkeyman - administrar claves OpenPGP APT de terceros
+
+== Sinopsis
+
+*aptkeyman* _COMANDO_ [_OPCIÓN_]...
+
+== Descripción
+
+*aptkeyman* mantiene una base SQLite local de claves de firma de repositorios
+APT (nombre, patrón de URL, huella, URL de clave, blob, estado aceptado/denegado).
+Examina `/etc/apt/sources.list` y `sources.list.d`, descarga llaveros
+faltantes y puede sembrar desde `/usr/share/keyrings`, `/etc/apt/keyrings`
+y errores de clave faltante de `apt-get update`.
+
+Flujo típico:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== Comandos
+
+*download*::
+  Descarga e instala llaveros faltantes para hechos aceptados que coinciden
+  con fuentes apt. Descargas concurrentes (`-j`/`--jobs`).
+  Proxy: `http_proxy`/`https_proxy`/`no_proxy` o
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  `proxy_mode` por clave: auto / always / never / URL explícita.
+
+*update*::
+  Actualiza todas las claves de las listas de fuentes (concurrente; mismas
+  opciones de proxy que *download*), luego purga llaveros gestionados sin
+  referencias. Sin `keyurl` conserva el blob almacenado.
+
+*verify*::
+  Verifica llaveros en disco frente a huellas de la base.
+
+*seed*::
+  Siembra la base desde claves well-known empaquetadas, directorios keyring
+  locales y diagnósticos opcionales de `apt-get update`
+  (`--apt-update` o `--apt-log`).
+
+*scan*::
+  Muestra fuentes apt y hechos coincidentes de la base.
+
+*list*, *show*, *accept*, *deny*, *add*, *fetch*::
+  Inspeccionar y editar hechos de claves.
+
+*export*, *import*::
+  Volcar o fusionar bases JSON.
+
+*gui*::
+  Abre una ventana wxPython (requiere `python3-wxgtk4.0`).
+
+*version*, *help*::
+  Información de versión y uso.
+
+== Archivos
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  Base de hechos por usuario.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  Entradas well-known empaquetadas.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  Base preconstruida con blobs (si se construyó con red).
+
+`/etc/apt/keyrings/`::
+  Destino predeterminado de llaveros instalados.
+
+== Autor
+
+Escrito por {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year} {project-author}.
+Licencia AGPL-3.0-or-later.

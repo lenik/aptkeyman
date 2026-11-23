@@ -1,74 +1,132 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 09:03+0800\n"
+"Project-Id-Version: aptkeyman\n"
+"Report-Msgid-Bugs-To: aptkeyman@bodz.net\n"
+"POT-Creation-Date: 2026-11-23 20:00+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/aptkeyman.py:16
+#: src/aptkeyman.py
 msgid ""
-"Usage: aptkeyman [OPTION]... [FILE]...\n"
-"Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-"read standard input.\n"
+"Usage: aptkeyman COMMAND [OPTION]...\n"
+"Manage third-party APT OpenPGP keys for sources.list entries.\n"
 msgstr ""
 
-#: src/aptkeyman.py:22
-msgid "repeat for more verbose loggings\n"
+#: src/aptkeyman.py
+msgid ""
+"Commands:\n"
 msgstr ""
 
-#: src/aptkeyman.py:24
-msgid "show less logging messages\n"
+#: src/aptkeyman.py
+msgid "download missing keys used by sources lists"
 msgstr ""
 
-#: src/aptkeyman.py:26
-msgid "display this help and exit\n"
+#: src/aptkeyman.py
+msgid "refresh keys for sources; purge unused managed keys"
 msgstr ""
 
-#: src/aptkeyman.py:28
-msgid "output version information and exit\n"
+#: src/aptkeyman.py
+msgid "verify installed keyring files against the DB"
 msgstr ""
 
-#: src/aptkeyman.py:30
-#, python-brace-format
-msgid "Report bugs to: <{email}>\n"
+#: src/aptkeyman.py
+msgid "seed DB from keyrings / wellknown / apt-get update misses"
 msgstr ""
 
-#: src/aptkeyman.py:35
-#, python-brace-format
-msgid "Copyright (C) {year} {author}\n"
+#: src/aptkeyman.py
+msgid "scan apt sources and show key matches"
 msgstr ""
 
-#: src/aptkeyman.py:36
+#: src/aptkeyman.py
+msgid "list key facts in the database"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "show one key fact as JSON"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as accepted"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as denied"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "add or update a key fact"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "fetch key blob into the DB"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "dump DB as JSON"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "merge external JSON data into the DB"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "open wxPython GUI"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "print DB path"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "print version information"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid "show this help"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid ""
+"Typical flow: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid ""
+"Report bugs to: <{email}>\n"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid ""
+"Copyright (C) {year} {author}\n"
+msgstr ""
+
+#: src/aptkeyman.py
 msgid ""
 "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
 msgstr ""
 
-#: src/aptkeyman.py:37
-msgid "This is free software: you are free to change and redistribute it.\n"
-msgstr ""
-
-#: src/aptkeyman.py:38
-msgid "This project opposes AI exploitation and AI hegemony.\n"
-msgstr ""
-
-#: src/aptkeyman.py:41
+#: src/aptkeyman.py
 msgid ""
-"This project rejects mindless MIT-style licensing and politically naive BSD-"
-"style licensing.\n"
+"This is free software: you are free to change and redistribute it.\n"
 msgstr ""
 
-#: src/aptkeyman.py:45
-msgid "There is NO WARRANTY, to the extent permitted by law.\n"
+#: src/aptkeyman.py
+msgid ""
+"This project opposes AI exploitation and AI hegemony.\n"
 msgstr ""
+
+#: src/aptkeyman.py
+msgid ""
+"This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"
+msgstr ""
+
+#: src/aptkeyman.py
+msgid ""
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+

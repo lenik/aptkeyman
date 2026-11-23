@@ -1,0 +1,88 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== 名前
+
+aptkeyman - サードパーティ APT OpenPGP 鍵の管理
+
+== 書式
+
+*aptkeyman* _コマンド_ [_オプション_]...
+
+== 説明
+
+*aptkeyman* は APT リポジトリ署名鍵のローカル SQLite データベース
+（名前、URL パターン、指紋、鍵 URL、ブロブ、受理/拒否状態）を保持します。
+`/etc/apt/sources.list` と `sources.list.d` を走査し、不足キーリングを
+ダウンロードし、`/usr/share/keyrings`、`/etc/apt/keyrings`、および
+`apt-get update` の欠落鍵エラーから初期化できます。
+
+典型的な流れ:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== コマンド
+
+*download*::
+  受理済みで apt ソースに一致する事実の不足キーリングをダウンロードして
+  インストールします。並列取得（`-j`/`--jobs`）。
+  プロキシ: `http_proxy`/`https_proxy`/`no_proxy` または
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`。
+  鍵ごとの `proxy_mode`: auto / always / never / 明示 URL。
+
+*update*::
+  ソース一覧で使う全鍵を更新（並列；プロキシは *download* と同じ）し、
+  参照されなくなった管理キーを削除します。`keyurl` が無い場合は保存済み
+  ブロブを保持します。
+
+*verify*::
+  ディスク上のキーリングを DB の指紋と照合します。
+
+*seed*::
+  パッケージの well-known 鍵、ローカル keyring ディレクトリ、任意の
+  `apt-get update` 診断（`--apt-update` または `--apt-log`）から DB を初期化。
+
+*scan*::
+  apt ソースと一致する DB 事実を表示。
+
+*list*、*show*、*accept*、*deny*、*add*、*fetch*::
+  鍵ファクトの参照と編集。
+
+*export*、*import*::
+  JSON 鍵 DB のダンプまたはマージ。
+
+*gui*::
+  wxPython ウィンドウを開く（`python3-wxgtk4.0` が必要）。
+
+*version*、*help*::
+  バージョン情報と使い方。
+
+== ファイル
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  ユーザーごとの鍵ファクト DB。
+
+`/usr/share/aptkeyman/wellknown.json`::
+  パッケージ同梱の well-known エントリ。
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  事前構築 DB（ネットワーク構築時はブロブ付き）。
+
+`/etc/apt/keyrings/`::
+  インストール先のデフォルト。
+
+== 著者
+
+{project-author} <{project-email}> が作成。
+
+== 著作権
+
+Copyright (C) {project-year} {project-author}.
+ライセンス AGPL-3.0-or-later.

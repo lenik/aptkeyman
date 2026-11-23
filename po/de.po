@@ -1,80 +1,124 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: aptkeyman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 22:31+0800\n"
+"Report-Msgid-Bugs-To: aptkeyman@bodz.net\n"
+"POT-Creation-Date: 2026-11-23 20:00+0900\n"
+"PO-Revision-Date: 2026-11-23 20:00+0900\n"
+"Last-Translator: Lenik <aptkeyman@bodz.net>\n"
+"Language-Team: de\n"
 "Language: de\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/aptkeyman.c:32
+#: src/aptkeyman.py
 msgid ""
-"Usage: aptkeyman [OPTION]... [FILE]...\n"
-"Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-"read standard input.\n"
+"Usage: aptkeyman COMMAND [OPTION]...\n"
+"Manage third-party APT OpenPGP keys for sources.list entries.\n"
 msgstr ""
-"Verwendung: aptkeyman [OPTION]... [FILE]...\n"
-"Verkettet FILE(s) zur Standardausgabe. Ohne FILE oder wenn FILE - ist,\n"
-"wird von der Standardeingabe gelesen.\n"
+"Aufruf: aptkeyman BEFEHL [OPTION]...\n"
+"Drittanbieter-APT-OpenPGP-Schlüssel für sources.list-Einträge verwalten.\n"
 
-#: src/aptkeyman.c:38
-msgid "repeat for more verbose loggings\n"
-msgstr "wiederholen fuer ausfuehrlichere Protokollmeldungen\n"
+#: src/aptkeyman.py
+msgid "Commands:\n"
+msgstr "Befehle:\n"
 
-#: src/aptkeyman.c:40
-msgid "show less logging messages\n"
-msgstr "weniger Protokollmeldungen anzeigen\n"
+#: src/aptkeyman.py
+msgid "download missing keys used by sources lists"
+msgstr "fehlende von Quellenlisten genutzte Schlüssel herunterladen"
 
-#: src/aptkeyman.c:42
-msgid "display this help and exit\n"
-msgstr "diese Hilfe anzeigen und beenden\n"
+#: src/aptkeyman.py
+msgid "refresh keys for sources; purge unused managed keys"
+msgstr "Schlüssel für Quellen aktualisieren; ungenutzte verwaltete Schlüssel entfernen"
 
-#: src/aptkeyman.c:44
-msgid "output version information and exit\n"
-msgstr "Versionsinformationen anzeigen und beenden\n"
+#: src/aptkeyman.py
+msgid "verify installed keyring files against the DB"
+msgstr "installierte Schlüsselbunddateien gegen die DB prüfen"
 
-#: src/aptkeyman.c:46
-#, fuzzy, c-format
-msgid "Report bugs to: <%s>\n"
-msgstr "Fehler melden an: <%s>\n"
+#: src/aptkeyman.py
+msgid "seed DB from keyrings / wellknown / apt-get update misses"
+msgstr "DB aus keyrings / wellknown / apt-get-update-Fehlern befüllen"
 
-#: src/aptkeyman.c:54
-#, c-format
-msgid "hello, world!\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "scan apt sources and show key matches"
+msgstr "APT-Quellen scannen und Schlüsseltreffer anzeigen"
 
-#: src/aptkeyman.c:81
-#, fuzzy, c-format
-msgid "Copyright (C) %d %s\n"
-msgstr "Copyright (C) %d %s\n"
+#: src/aptkeyman.py
+msgid "list key facts in the database"
+msgstr "Schlüsselfakten in der Datenbank auflisten"
 
-#: src/aptkeyman.c:82
-msgid ""
-"License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
-msgstr ""
-"Lizenz AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+#: src/aptkeyman.py
+msgid "show one key fact as JSON"
+msgstr "einen Schlüsselfakt als JSON anzeigen"
 
-#: src/aptkeyman.c:84
+#: src/aptkeyman.py
+msgid "mark key fact(s) as accepted"
+msgstr "Schlüsselfakt(en) als akzeptiert markieren"
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as denied"
+msgstr "Schlüsselfakt(en) als abgelehnt markieren"
+
+#: src/aptkeyman.py
+msgid "add or update a key fact"
+msgstr "Schlüsselfakt hinzufügen oder aktualisieren"
+
+#: src/aptkeyman.py
+msgid "fetch key blob into the DB"
+msgstr "Schlüsselblob in die DB holen"
+
+#: src/aptkeyman.py
+msgid "dump DB as JSON"
+msgstr "DB als JSON ausgeben"
+
+#: src/aptkeyman.py
+msgid "merge external JSON data into the DB"
+msgstr "externe JSON-Daten in die DB mergen"
+
+#: src/aptkeyman.py
+msgid "open wxPython GUI"
+msgstr "wxPython-Oberfläche öffnen"
+
+#: src/aptkeyman.py
+msgid "print DB path"
+msgstr "DB-Pfad ausgeben"
+
+#: src/aptkeyman.py
+msgid "print version information"
+msgstr "Versionsinformationen ausgeben"
+
+#: src/aptkeyman.py
+msgid "show this help"
+msgstr "diese Hilfe anzeigen"
+
+#: src/aptkeyman.py
+msgid "Typical flow: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+msgstr "Typischer Ablauf: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+
+#: src/aptkeyman.py
+msgid "Report bugs to: <{email}>\n"
+msgstr "Fehler melden an: <{email}>\n"
+
+#: src/aptkeyman.py
+msgid "Copyright (C) {year} {author}\n"
+msgstr "Copyright (C) {year} {author}\n"
+
+#: src/aptkeyman.py
+msgid "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+msgstr "Lizenz AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+
+#: src/aptkeyman.py
 msgid "This is free software: you are free to change and redistribute it.\n"
-msgstr "Dies ist freie Software: Sie duerfen sie aendern und weitergeben.\n"
+msgstr "Dies ist freie Software: Sie dürfen sie ändern und weitergeben.\n"
 
-#: src/aptkeyman.c:86
+#: src/aptkeyman.py
 msgid "This project opposes AI exploitation and AI hegemony.\n"
 msgstr "Dieses Projekt lehnt KI-Ausbeutung und KI-Hegemonie ab.\n"
 
-#: src/aptkeyman.c:87
-msgid ""
-"This project rejects mindless MIT-style licensing and politically naive BSD-"
-"style licensing.\n"
-msgstr ""
-"Dieses Projekt lehnt gedankenlose MIT-artige Lizenzen und politisch naive "
-"BSD-artige Lizenzen ab.\n"
+#: src/aptkeyman.py
+msgid "This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"
+msgstr "Dieses Projekt lehnt gedankenlose MIT-artige und politisch naive BSD-artige Lizenzen ab.\n"
 
-#: src/aptkeyman.c:90
+#: src/aptkeyman.py
 msgid "There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr "Es gibt KEINE GARANTIE, soweit gesetzlich zulaessig.\n"
-
-#: src/lib.c:49
-#, c-format
-msgid "%s: write error\n"
-msgstr ""
+msgstr "Es gibt KEINE GARANTIE, soweit gesetzlich zulässig.\n"

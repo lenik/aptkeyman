@@ -1,80 +1,124 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: aptkeyman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 22:31+0800\n"
+"Report-Msgid-Bugs-To: aptkeyman@bodz.net\n"
+"POT-Creation-Date: 2026-11-23 20:00+0900\n"
+"PO-Revision-Date: 2026-11-23 20:00+0900\n"
+"Last-Translator: Lenik <aptkeyman@bodz.net>\n"
+"Language-Team: ko\n"
 "Language: ko\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/aptkeyman.c:32
+#: src/aptkeyman.py
 msgid ""
-"Usage: aptkeyman [OPTION]... [FILE]...\n"
-"Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-"read standard input.\n"
+"Usage: aptkeyman COMMAND [OPTION]...\n"
+"Manage third-party APT OpenPGP keys for sources.list entries.\n"
 msgstr ""
-"사용법: aptkeyman [OPTION]... [FILE]...\n"
-"FILE 내용을 이어서 표준 출력으로 보냅니다. FILE이 없거나 FILE이 - 이면,\n"
-"표준 입력을 읽습니다.\n"
+"사용법: aptkeyman 명령 [옵션]...\n"
+"sources.list 항목용 서드파티 APT OpenPGP 키를 관리합니다.\n"
 
-#: src/aptkeyman.c:38
-msgid "repeat for more verbose loggings\n"
-msgstr "더 자세한 로그를 보려면 반복 지정\n"
+#: src/aptkeyman.py
+msgid "Commands:\n"
+msgstr "명령:\n"
 
-#: src/aptkeyman.c:40
-msgid "show less logging messages\n"
-msgstr "로그 메시지를 더 적게 표시\n"
+#: src/aptkeyman.py
+msgid "download missing keys used by sources lists"
+msgstr "소스 목록에 쓰인 누락 키 다운로드"
 
-#: src/aptkeyman.c:42
-msgid "display this help and exit\n"
-msgstr "도움말을 표시하고 종료\n"
+#: src/aptkeyman.py
+msgid "refresh keys for sources; purge unused managed keys"
+msgstr "소스용 키 갱신; 미사용 관리 키 정리"
 
-#: src/aptkeyman.c:44
-msgid "output version information and exit\n"
-msgstr "버전 정보를 표시하고 종료\n"
+#: src/aptkeyman.py
+msgid "verify installed keyring files against the DB"
+msgstr "설치된 키링 파일을 DB와 대조 검증"
 
-#: src/aptkeyman.c:46
-#, fuzzy, c-format
-msgid "Report bugs to: <%s>\n"
-msgstr "버그 제보: <%s>\n"
+#: src/aptkeyman.py
+msgid "seed DB from keyrings / wellknown / apt-get update misses"
+msgstr "keyrings / wellknown / apt-get update 누락으로 DB 시드"
 
-#: src/aptkeyman.c:54
-#, c-format
-msgid "hello, world!\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "scan apt sources and show key matches"
+msgstr "apt 소스를 검사하고 키 매칭 표시"
 
-#: src/aptkeyman.c:81
-#, fuzzy, c-format
-msgid "Copyright (C) %d %s\n"
-msgstr "저작권 (C) %d %s\n"
+#: src/aptkeyman.py
+msgid "list key facts in the database"
+msgstr "데이터베이스의 키 사실 나열"
 
-#: src/aptkeyman.c:82
-msgid ""
-"License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
-msgstr ""
-"라이선스 AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+#: src/aptkeyman.py
+msgid "show one key fact as JSON"
+msgstr "키 사실 하나를 JSON으로 표시"
 
-#: src/aptkeyman.c:84
+#: src/aptkeyman.py
+msgid "mark key fact(s) as accepted"
+msgstr "키 사실을 수락으로 표시"
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as denied"
+msgstr "키 사실을 거부로 표시"
+
+#: src/aptkeyman.py
+msgid "add or update a key fact"
+msgstr "키 사실 추가 또는 갱신"
+
+#: src/aptkeyman.py
+msgid "fetch key blob into the DB"
+msgstr "키 블롭을 DB로 가져오기"
+
+#: src/aptkeyman.py
+msgid "dump DB as JSON"
+msgstr "DB를 JSON으로 덤프"
+
+#: src/aptkeyman.py
+msgid "merge external JSON data into the DB"
+msgstr "외부 JSON을 DB에 병합"
+
+#: src/aptkeyman.py
+msgid "open wxPython GUI"
+msgstr "wxPython GUI 열기"
+
+#: src/aptkeyman.py
+msgid "print DB path"
+msgstr "DB 경로 출력"
+
+#: src/aptkeyman.py
+msgid "print version information"
+msgstr "버전 정보 출력"
+
+#: src/aptkeyman.py
+msgid "show this help"
+msgstr "이 도움말 표시"
+
+#: src/aptkeyman.py
+msgid "Typical flow: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+msgstr "일반 흐름: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+
+#: src/aptkeyman.py
+msgid "Report bugs to: <{email}>\n"
+msgstr "버그 보고: <{email}>\n"
+
+#: src/aptkeyman.py
+msgid "Copyright (C) {year} {author}\n"
+msgstr "Copyright (C) {year} {author}\n"
+
+#: src/aptkeyman.py
+msgid "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+msgstr "라이선스 AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+
+#: src/aptkeyman.py
 msgid "This is free software: you are free to change and redistribute it.\n"
-msgstr "이것은 자유 소프트웨어이며 자유롭게 수정 및 재배포할 수 있습니다.\n"
+msgstr "이것은 자유 소프트웨어입니다. 변경하고 재배포할 수 있습니다.\n"
 
-#: src/aptkeyman.c:86
+#: src/aptkeyman.py
 msgid "This project opposes AI exploitation and AI hegemony.\n"
 msgstr "이 프로젝트는 AI 착취와 AI 패권에 반대합니다.\n"
 
-#: src/aptkeyman.c:87
-msgid ""
-"This project rejects mindless MIT-style licensing and politically naive BSD-"
-"style licensing.\n"
-msgstr ""
-"이 프로젝트는 무비판적 MIT식 라이선스와 정치적으로 어리석은 BSD식 라이선스를 "
-"거부합니다.\n"
+#: src/aptkeyman.py
+msgid "This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"
+msgstr "이 프로젝트는 무분별한 MIT식 라이선스와 정치적으로 순진한 BSD식 라이선스를 거부합니다.\n"
 
-#: src/aptkeyman.c:90
+#: src/aptkeyman.py
 msgid "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr "법이 허용하는 한 어떠한 보증도 없습니다.\n"
-
-#: src/lib.c:49
-#, c-format
-msgid "%s: write error\n"
-msgstr ""

@@ -1,78 +1,124 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: aptkeyman\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 22:31+0800\n"
+"Report-Msgid-Bugs-To: aptkeyman@bodz.net\n"
+"POT-Creation-Date: 2026-11-23 20:00+0900\n"
+"PO-Revision-Date: 2026-11-23 20:00+0900\n"
+"Last-Translator: Lenik <aptkeyman@bodz.net>\n"
+"Language-Team: zh_CN\n"
 "Language: zh_CN\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/aptkeyman.c:32
+#: src/aptkeyman.py
 msgid ""
-"Usage: aptkeyman [OPTION]... [FILE]...\n"
-"Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-"read standard input.\n"
+"Usage: aptkeyman COMMAND [OPTION]...\n"
+"Manage third-party APT OpenPGP keys for sources.list entries.\n"
 msgstr ""
-"用法：aptkeyman [选项]... [文件]...\n"
-"将文件内容连接并输出到标准输出。若未提供文件，或文件为 -，\n"
-"则从标准输入读取。\n"
+"用法：aptkeyman 命令 [选项]...\n"
+"管理 sources.list 条目所需的第三方 APT OpenPGP 密钥。\n"
 
-#: src/aptkeyman.c:38
-msgid "repeat for more verbose loggings\n"
-msgstr "重复使用以输出更多详细日志\n"
+#: src/aptkeyman.py
+msgid "Commands:\n"
+msgstr "命令：\n"
 
-#: src/aptkeyman.c:40
-msgid "show less logging messages\n"
-msgstr "显示更少的日志消息\n"
+#: src/aptkeyman.py
+msgid "download missing keys used by sources lists"
+msgstr "下载 sources 列表所用的缺失密钥"
 
-#: src/aptkeyman.c:42
-msgid "display this help and exit\n"
-msgstr "显示此帮助并退出\n"
+#: src/aptkeyman.py
+msgid "refresh keys for sources; purge unused managed keys"
+msgstr "刷新 sources 所用密钥；清理未使用的托管密钥"
 
-#: src/aptkeyman.c:44
-msgid "output version information and exit\n"
-msgstr "输出版本信息并退出\n"
+#: src/aptkeyman.py
+msgid "verify installed keyring files against the DB"
+msgstr "对照数据库校验已安装的密钥环文件"
 
-#: src/aptkeyman.c:46
-#, fuzzy, c-format
-msgid "Report bugs to: <%s>\n"
-msgstr "报告问题到：<%s>\n"
+#: src/aptkeyman.py
+msgid "seed DB from keyrings / wellknown / apt-get update misses"
+msgstr "从 keyrings / wellknown / apt-get update 缺钥信息播种数据库"
 
-#: src/aptkeyman.c:54
-#, c-format
-msgid "hello, world!\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "scan apt sources and show key matches"
+msgstr "扫描 apt 源并显示密钥匹配"
 
-#: src/aptkeyman.c:81
-#, fuzzy, c-format
-msgid "Copyright (C) %d %s\n"
-msgstr "版权所有 (C) %d %s\n"
+#: src/aptkeyman.py
+msgid "list key facts in the database"
+msgstr "列出数据库中的密钥事实"
 
-#: src/aptkeyman.c:82
-msgid ""
-"License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
-msgstr ""
-"许可证 AGPL-3.0-or-later：<https://www.gnu.org/licenses/agpl-3.0.html>\n"
+#: src/aptkeyman.py
+msgid "show one key fact as JSON"
+msgstr "以 JSON 显示一条密钥事实"
 
-#: src/aptkeyman.c:84
+#: src/aptkeyman.py
+msgid "mark key fact(s) as accepted"
+msgstr "将密钥事实标记为已接受"
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as denied"
+msgstr "将密钥事实标记为已拒绝"
+
+#: src/aptkeyman.py
+msgid "add or update a key fact"
+msgstr "添加或更新一条密钥事实"
+
+#: src/aptkeyman.py
+msgid "fetch key blob into the DB"
+msgstr "将密钥数据拉取到数据库"
+
+#: src/aptkeyman.py
+msgid "dump DB as JSON"
+msgstr "将数据库导出为 JSON"
+
+#: src/aptkeyman.py
+msgid "merge external JSON data into the DB"
+msgstr "将外部 JSON 合并进数据库"
+
+#: src/aptkeyman.py
+msgid "open wxPython GUI"
+msgstr "打开 wxPython 图形界面"
+
+#: src/aptkeyman.py
+msgid "print DB path"
+msgstr "打印数据库路径"
+
+#: src/aptkeyman.py
+msgid "print version information"
+msgstr "打印版本信息"
+
+#: src/aptkeyman.py
+msgid "show this help"
+msgstr "显示此帮助"
+
+#: src/aptkeyman.py
+msgid "Typical flow: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+msgstr "典型流程：aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+
+#: src/aptkeyman.py
+msgid "Report bugs to: <{email}>\n"
+msgstr "报告问题：<{email}>\n"
+
+#: src/aptkeyman.py
+msgid "Copyright (C) {year} {author}\n"
+msgstr "Copyright (C) {year} {author}\n"
+
+#: src/aptkeyman.py
+msgid "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+msgstr "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+
+#: src/aptkeyman.py
 msgid "This is free software: you are free to change and redistribute it.\n"
 msgstr "这是自由软件：你可以自由修改并重新分发。\n"
 
-#: src/aptkeyman.c:86
+#: src/aptkeyman.py
 msgid "This project opposes AI exploitation and AI hegemony.\n"
 msgstr "本项目反对 AI 剥削与 AI 霸权。\n"
 
-#: src/aptkeyman.c:87
-msgid ""
-"This project rejects mindless MIT-style licensing and politically naive BSD-"
-"style licensing.\n"
-msgstr "本项目反对无脑 MIT 式许可证和政治愚蠢 BSD 式许可证。\n"
+#: src/aptkeyman.py
+msgid "This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"
+msgstr "本项目反对无脑 MIT 式许可与政治幼稚的 BSD 式许可。\n"
 
-#: src/aptkeyman.c:90
+#: src/aptkeyman.py
 msgid "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr "在法律允许范围内，不提供任何担保。\n"
-
-#: src/lib.c:49
-#, c-format
-msgid "%s: write error\n"
-msgstr ""

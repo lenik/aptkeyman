@@ -1,84 +1,124 @@
-# Spanish translations for aptkeyman package.
-# Copyright (C) 2026 THE aptkeyman'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the aptkeyman package.
-# Automatically generated, 2026.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: aptkeyman 3b1f339-dirty\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 22:31+0800\n"
-"PO-Revision-Date: 2026-04-24 22:31+0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Project-Id-Version: aptkeyman\n"
+"Report-Msgid-Bugs-To: aptkeyman@bodz.net\n"
+"POT-Creation-Date: 2026-11-23 20:00+0900\n"
+"PO-Revision-Date: 2026-11-23 20:00+0900\n"
+"Last-Translator: Lenik <aptkeyman@bodz.net>\n"
+"Language-Team: es\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/aptkeyman.c:32
+#: src/aptkeyman.py
 msgid ""
-"Usage: aptkeyman [OPTION]... [FILE]...\n"
-"Concatenate FILE(s) to standard output. With no FILE, or when FILE is -,\n"
-"read standard input.\n"
+"Usage: aptkeyman COMMAND [OPTION]...\n"
+"Manage third-party APT OpenPGP keys for sources.list entries.\n"
 msgstr ""
+"Uso: aptkeyman COMANDO [OPCIÓN]...\n"
+"Administra claves OpenPGP APT de terceros para entradas de sources.list.\n"
 
-#: src/aptkeyman.c:38
-msgid "repeat for more verbose loggings\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "Commands:\n"
+msgstr "Comandos:\n"
 
-#: src/aptkeyman.c:40
-msgid "show less logging messages\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "download missing keys used by sources lists"
+msgstr "descargar claves faltantes usadas por las listas de fuentes"
 
-#: src/aptkeyman.c:42
-msgid "display this help and exit\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "refresh keys for sources; purge unused managed keys"
+msgstr "actualizar claves de fuentes; purgar claves gestionadas no usadas"
 
-#: src/aptkeyman.c:44
-msgid "output version information and exit\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "verify installed keyring files against the DB"
+msgstr "verificar archivos de llavero instalados frente a la BD"
 
-#: src/aptkeyman.c:46
-#, c-format
-msgid "Report bugs to: <%s>\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "seed DB from keyrings / wellknown / apt-get update misses"
+msgstr "sembrar la BD desde keyrings / wellknown / fallos de apt-get update"
 
-#: src/aptkeyman.c:54
-#, c-format
-msgid "hello, world!\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "scan apt sources and show key matches"
+msgstr "examinar fuentes apt y mostrar coincidencias de claves"
 
-#: src/aptkeyman.c:81
-#, c-format
-msgid "Copyright (C) %d %s\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "list key facts in the database"
+msgstr "listar hechos de claves en la base de datos"
 
-#: src/aptkeyman.c:82
-msgid ""
-"License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "show one key fact as JSON"
+msgstr "mostrar un hecho de clave como JSON"
 
-#: src/aptkeyman.c:84
+#: src/aptkeyman.py
+msgid "mark key fact(s) as accepted"
+msgstr "marcar hecho(s) de clave como aceptados"
+
+#: src/aptkeyman.py
+msgid "mark key fact(s) as denied"
+msgstr "marcar hecho(s) de clave como denegados"
+
+#: src/aptkeyman.py
+msgid "add or update a key fact"
+msgstr "añadir o actualizar un hecho de clave"
+
+#: src/aptkeyman.py
+msgid "fetch key blob into the DB"
+msgstr "obtener el blob de clave en la BD"
+
+#: src/aptkeyman.py
+msgid "dump DB as JSON"
+msgstr "volcar la BD como JSON"
+
+#: src/aptkeyman.py
+msgid "merge external JSON data into the DB"
+msgstr "fusionar datos JSON externos en la BD"
+
+#: src/aptkeyman.py
+msgid "open wxPython GUI"
+msgstr "abrir la GUI de wxPython"
+
+#: src/aptkeyman.py
+msgid "print DB path"
+msgstr "imprimir la ruta de la BD"
+
+#: src/aptkeyman.py
+msgid "print version information"
+msgstr "imprimir información de versión"
+
+#: src/aptkeyman.py
+msgid "show this help"
+msgstr "mostrar esta ayuda"
+
+#: src/aptkeyman.py
+msgid "Typical flow: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+msgstr "Flujo típico: aptkeyman seed && sudo aptkeyman download && sudo apt-get update\n"
+
+#: src/aptkeyman.py
+msgid "Report bugs to: <{email}>\n"
+msgstr "Informar errores a: <{email}>\n"
+
+#: src/aptkeyman.py
+msgid "Copyright (C) {year} {author}\n"
+msgstr "Copyright (C) {year} {author}\n"
+
+#: src/aptkeyman.py
+msgid "License AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+msgstr "Licencia AGPL-3.0-or-later: <https://www.gnu.org/licenses/agpl-3.0.html>\n"
+
+#: src/aptkeyman.py
 msgid "This is free software: you are free to change and redistribute it.\n"
-msgstr ""
+msgstr "Esto es software libre: puede modificarlo y redistribuirlo.\n"
 
-#: src/aptkeyman.c:86
+#: src/aptkeyman.py
 msgid "This project opposes AI exploitation and AI hegemony.\n"
-msgstr ""
+msgstr "Este proyecto se opone a la explotación y la hegemonía de la IA.\n"
 
-#: src/aptkeyman.c:87
-msgid ""
-"This project rejects mindless MIT-style licensing and politically naive BSD-"
-"style licensing.\n"
-msgstr ""
+#: src/aptkeyman.py
+msgid "This project rejects mindless MIT-style licensing and politically naive BSD-style licensing.\n"
+msgstr "Este proyecto rechaza las licencias estilo MIT sin criterio y las estilo BSD políticamente ingenuas.\n"
 
-#: src/aptkeyman.c:90
+#: src/aptkeyman.py
 msgid "There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-
-#: src/lib.c:49
-#, c-format
-msgid "%s: write error\n"
-msgstr ""
+msgstr "NO hay GARANTÍA, en la medida permitida por la ley.\n"

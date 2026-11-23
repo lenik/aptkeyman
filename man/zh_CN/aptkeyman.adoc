@@ -1,0 +1,86 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== 名称
+
+aptkeyman - 管理第三方 APT OpenPGP 密钥
+
+== 概述
+
+*aptkeyman* _命令_ [_选项_]...
+
+== 描述
+
+*aptkeyman* 维护本地 SQLite 数据库，记录 APT 仓库签名密钥
+（名称、URL 模式、指纹、密钥 URL、密钥数据、接受/拒绝状态）。
+它扫描 `/etc/apt/sources.list` 与 `sources.list.d`，下载缺失的
+密钥环文件，并可从 `/usr/share/keyrings`、`/etc/apt/keyrings`
+以及 `apt-get update` 缺钥错误中播种事实。
+
+典型流程：
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== 命令
+
+*download*::
+  为已接受且与 apt 源匹配的事实下载并安装缺失密钥环。
+  并发抓取（`-j`/`--jobs`）。代理：`http_proxy`/`https_proxy`/`no_proxy`
+  或 `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`。
+  数据库中的 `proxy_mode` 可选 auto / always / never / 显式 URL。
+
+*update*::
+  刷新 sources 所用全部密钥（并发；代理选项同 *download*），
+  然后清理不再引用的托管密钥文件。无 `keyurl` 的密钥保留已存数据。
+
+*verify*::
+  对照数据库中的指纹校验磁盘上的密钥环文件。
+
+*seed*::
+  从打包的 well-known 密钥、本地 keyring 目录以及可选的
+  `apt-get update` 诊断（`--apt-update` 或 `--apt-log`）播种数据库。
+
+*scan*::
+  显示 apt 源及其匹配的数据库事实。
+
+*list*、*show*、*accept*、*deny*、*add*、*fetch*::
+  查看与编辑密钥事实。
+
+*export*、*import*::
+  导出或合并 JSON 密钥数据库。
+
+*gui*::
+  打开 wxPython 管理窗口（需要 `python3-wxgtk4.0`）。
+
+*version*、*help*::
+  版本信息与用法说明。
+
+== 文件
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  每用户密钥事实数据库。
+
+`/usr/share/aptkeyman/wellknown.json`::
+  打包的知名发布者条目。
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  预构建数据库（构建时联网下载密钥数据）。
+
+`/etc/apt/keyrings/`::
+  安装密钥环文件的默认目录。
+
+== 作者
+
+由 {project-author} <{project-email}> 编写。
+
+== 版权
+
+Copyright (C) {project-year} {project-author}.
+许可证 AGPL-3.0-or-later.

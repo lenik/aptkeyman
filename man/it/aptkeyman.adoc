@@ -1,0 +1,89 @@
+= aptkeyman(1)
+:doctype: manpage
+:manmanual: User Commands
+:mansource: aptkeyman
+:man-version: {project-version}
+
+== Nome
+
+aptkeyman - gestisce le chiavi OpenPGP APT di terze parti
+
+== Sinossi
+
+*aptkeyman* _COMANDO_ [_OPZIONE_]...
+
+== Descrizione
+
+*aptkeyman* mantiene un database SQLite locale delle chiavi di firma dei
+repository APT (nome, schema URL, impronta, URL chiave, blob, stato
+accettato/rifiutato). Analizza `/etc/apt/sources.list` e `sources.list.d`,
+scarica i keyring mancanti e può inizializzare da `/usr/share/keyrings`,
+`/etc/apt/keyrings` e dagli errori di chiave mancante di `apt-get update`.
+
+Flusso tipico:
+
+----
+aptkeyman seed --apt-log /tmp/apt-update.out
+sudo aptkeyman download
+sudo apt-get update
+----
+
+== Comandi
+
+*download*::
+  Scarica e installa i keyring mancanti per i fatti accettati corrispondenti
+  alle fonti apt. Scaricamenti concorrenti (`-j`/`--jobs`).
+  Proxy: `http_proxy`/`https_proxy`/`no_proxy` oppure
+  `--proxy`/`--http-proxy`/`--https-proxy`/`--no-proxy`.
+  `proxy_mode` per chiave: auto / always / never / URL esplicita.
+
+*update*::
+  Aggiorna tutte le chiavi usate dagli elenchi delle fonti (concorrenti;
+  stesse opzioni proxy di *download*), poi elimina i keyring gestiti non
+  più referenziati. Senza `keyurl` conserva il blob memorizzato.
+
+*verify*::
+  Verifica i keyring su disco rispetto alle impronte nel database.
+
+*seed*::
+  Inizializza il DB dalle chiavi well-known, dalle directory keyring locali
+  e dalle diagnostiche opzionali di `apt-get update`
+  (`--apt-update` o `--apt-log`).
+
+*scan*::
+  Mostra le fonti apt e i fatti del DB corrispondenti.
+
+*list*, *show*, *accept*, *deny*, *add*, *fetch*::
+  Ispeziona e modifica i fatti chiave.
+
+*export*, *import*::
+  Esporta o unisce database JSON.
+
+*gui*::
+  Apre una finestra wxPython (richiede `python3-wxgtk4.0`).
+
+*version*, *help*::
+  Informazioni di versione e uso.
+
+== File
+
+`~/.local/share/aptkeyman/aptkeyman.db`::
+  Database dei fatti per utente.
+
+`/usr/share/aptkeyman/wellknown.json`::
+  Voci well-known incluse nel pacchetto.
+
+`/usr/share/aptkeyman/aptkeyman.db`::
+  Database precompilato con blob (se costruito in rete).
+
+`/etc/apt/keyrings/`::
+  Destinazione predefinita dei keyring installati.
+
+== Autore
+
+Scritto da {project-author} <{project-email}>.
+
+== Copyright
+
+Copyright (C) {project-year} {project-author}.
+Licenza AGPL-3.0-or-later.
