@@ -41,7 +41,15 @@ def pattern_matches(pattern: str, uri: str) -> bool:
     return False
 
 
+def pattern_specificity(pattern: str) -> tuple[int, int, int]:
+    """Higher is more specific: longer literal span, longer pattern, fewer wildcards."""
+    pat = (pattern or "").strip().rstrip("/")
+    wildcards = pat.count("*") + pat.count("?")
+    literal = len(pat) - wildcards
+    return (literal, len(pat), -wildcards)
+
+
 def find_matching(facts, uri: str):
     matched = [f for f in facts if pattern_matches(f.server, uri)]
-    matched.sort(key=lambda f: len(f.server or ""), reverse=True)
+    matched.sort(key=lambda f: pattern_specificity(f.server or ""), reverse=True)
     return matched

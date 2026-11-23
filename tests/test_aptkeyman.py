@@ -12,7 +12,7 @@ from unittest import mock
 
 from aptkeyman_db import KeyDatabase, KeyFact
 from aptkeyman_keys import download_for_sources, ensure_keydata, update_keys, write_keyfile
-from aptkeyman_patterns import pattern_matches
+from aptkeyman_patterns import find_matching, pattern_matches
 from aptkeyman_proxy import ProxyConfig, ProxyRequiredError, normalize_proxy_mode, opener_for_url
 from aptkeyman_seed import parse_apt_update_log, seed_from_apt_misses
 from aptkeyman_sources import parse_one_line, rewrite_signed_by
@@ -29,6 +29,35 @@ class PatternTests(unittest.TestCase):
 
     def test_github(self):
         self.assertTrue(pattern_matches("cli.github.com/*", "https://cli.github.com/packages"))
+
+    def test_microsoft_code_prefers_legacy(self):
+        facts = [
+            KeyFact(
+                id=None,
+                name="microsoft",
+                server="packages.microsoft.com/debian/13/*",
+                fingerprint="AA86F75E427A19DD33346403EE4D7792F748182B",
+                keyurl="",
+                keyfile="microsoft-2025.gpg",
+                keydata=None,
+                state="accepted",
+            ),
+            KeyFact(
+                id=None,
+                name="microsoft-legacy",
+                server="*.microsoft.com/*",
+                fingerprint="BC528686B50D79E339D3721CEB3E94ADBE1229CF",
+                keyurl="",
+                keyfile="microsoft.gpg",
+                keydata=None,
+                state="accepted",
+            ),
+        ]
+        code = find_matching(facts, "https://packages.microsoft.com/repos/code")
+        self.assertEqual(code[0].name, "microsoft-legacy")
+        deb13 = find_matching(facts, "https://packages.microsoft.com/debian/13/prod")
+        self.assertEqual(deb13[0].name, "microsoft")
+        self.assertTrue(any(f.name == "microsoft-legacy" for f in deb13))
 
 
 class SourcesTests(unittest.TestCase):
