@@ -1,0 +1,18 @@
+Source: aptkeyman
+Section: utils
+Priority: optional
+Maintainer: Lenik <aptkeyman@bodz.net>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3, gettext, asciidoctor
+Standards-Version: 4.6.0
+Homepage: https://github.com/lenik/aptkeyman
+Rules-Requires-Root: no
+
+Package: aptkeyman
+Architecture: any
+Depends: 
+    python3, 
+    ${misc:Depends}
+Description: Meson-based CLI project template with example app
+ aptkeyman is a template repository for small Python command-line utilities.
+ It currently ships the aptkeyman example application and Debian packaging
+ metadata, and includes Python unittest integration.
