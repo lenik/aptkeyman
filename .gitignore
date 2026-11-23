@@ -85,6 +85,8 @@ Makefile.in
 Rules-quot
 Thumbs.db
 __pycache__/
+data/aptkeyman.db
+data/aptkeyman.manifest.json
 aclocal.m4
 autom4te.cache/
 build/

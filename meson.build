@@ -34,9 +34,11 @@ datadir = prefix / get_option('datadir')
 localedir = prefix / get_option('localedir')
 mandir = prefix / get_option('mandir')
 pkgdocdir = datadir / 'doc' / meson.project_name()
+pkgdatadir = datadir / meson.project_name()
 
 subdir('po')
 
+# Main executable
 aptkeyman_exe = custom_target(
     'aptkeyman',
     input: 'src/aptkeyman.py',
@@ -53,14 +55,52 @@ aptkeyman_exe = custom_target(
     install_dir: bindir,
 )
 
-commons_mod = custom_target(
-    'commons',
-    input: 'src/commons.py',
-    output: 'commons.py',
-    command: ['cp', '@INPUT@', '@OUTPUT@'],
+# Helper modules installed next to the executable (importable via PATH dir)
+py_modules = [
+    'commons.py',
+    'aptkeyman_db.py',
+    'aptkeyman_patterns.py',
+    'aptkeyman_sources.py',
+    'aptkeyman_fetch.py',
+    'aptkeyman_progress.py',
+    'aptkeyman_keys.py',
+    'aptkeyman_proxy.py',
+    'aptkeyman_seed.py',
+    'aptkeyman_verify.py',
+    'aptkeyman_gui.py',
+]
+
+foreach mod : py_modules
+    custom_target(
+        mod,
+        input: 'src' / mod,
+        output: mod,
+        command: ['cp', '@INPUT@', '@OUTPUT@'],
+        build_by_default: true,
+        install: true,
+        install_dir: bindir,
+    )
+endforeach
+
+# Builtin key database (download blobs at build time when network allows)
+build_db = custom_target(
+    'aptkeyman-db',
+    input: ['data/wellknown.json', 'scripts/build_db.py'],
+    output: 'aptkeyman.db',
+    command: [
+        py,
+        meson.project_source_root() / 'scripts/build_db.py',
+        '--json', meson.project_source_root() / 'data/wellknown.json',
+        '--out', '@OUTPUT@',
+    ],
     build_by_default: true,
     install: true,
-    install_dir: bindir,
+    install_dir: pkgdatadir,
+)
+
+install_data(
+    'data/wellknown.json',
+    install_dir: pkgdatadir,
 )
 
 install_data(
@@ -74,28 +114,50 @@ install_data(
         'LICENSE',
         'README.md',
         'README-zh_CN.md',
+        'VERSION',
     ],
     install_dir: pkgdocdir,
 )
+
+man_asciidoctor_args = [
+    asciidoctor,
+    '-b', 'manpage',
+    '-a', 'project-version=' + meson.project_version(),
+    '-a', 'project-year=@0@'.format(project_year),
+    '-a', 'project-author=' + project_author,
+    '-a', 'project-email=' + project_email,
+]
 
 custom_target(
     'aptkeyman-man',
     input: 'man/aptkeyman.adoc',
     output: 'aptkeyman.1',
-    command: [
-        asciidoctor,
-        '-b', 'manpage',
-        '-a', 'project-version=' + meson.project_version(),
-        '-a', 'project-year=@0@'.format(project_year),
-        '-a', 'project-author=' + project_author,
-        '-a', 'project-email=' + project_email,
-        '-o', '@OUTPUT@',
-        '@INPUT@',
-    ],
+    command: man_asciidoctor_args + ['-o', '@OUTPUT@', '@INPUT@'],
     build_by_default: true,
     install: true,
     install_dir: mandir / 'man1',
 )
+
+man_locales = ['fr', 'it', 'de', 'es', 'zh_CN', 'ja', 'ko', 'ar']
+foreach loc : man_locales
+    # Unique build-dir name; install as aptkeyman.1 under mandir/<loc>/man1/
+    locale_man = custom_target(
+        'aptkeyman-man-' + loc,
+        input: 'man' / loc / 'aptkeyman.adoc',
+        output: loc + '-aptkeyman.1',
+        command: man_asciidoctor_args + ['-o', '@OUTPUT@', '@INPUT@'],
+        build_by_default: true,
+    )
+    meson.add_install_script(
+        'sh',
+        '-c',
+        'mkdir -p "${DESTDIR}' + (mandir / loc / 'man1') + '" && cp -f "'
+        + locale_man.full_path()
+        + '" "${DESTDIR}'
+        + (mandir / loc / 'man1' / 'aptkeyman.1')
+        + '"',
+    )
+endforeach
 
 test(
     'python-unit',
@@ -104,6 +166,7 @@ test(
     env: [
         'PYTHONPATH=' + (meson.project_source_root() / 'src'),
         'APTKEYMAN_LOCALEDIR=' + (meson.project_build_root() / 'po'),
+        'APTKEYMAN_DATADIR=' + (meson.project_source_root() / 'data'),
     ],
 )
 
@@ -132,17 +195,9 @@ run_target(
     'install-symlinks',
     command: [
         'bash',
-        '-euc', '''
-            prefix="@0@"
-            bindir="@1@"
-            datadir="@2@"
-            mandir="@3@"
-            mkdir -p "$bindir" "$datadir/bash-completion/completions" "$mandir/man1"
-            sudo ln -sfn "@BUILD_ROOT@/aptkeyman" "$bindir/aptkeyman"
-            sudo ln -sfn "@BUILD_ROOT@/aptkeyman.1" "$mandir/man1/aptkeyman.1"
-            sudo ln -sfn "@SOURCE_ROOT@/aptkeyman.bash" "$datadir/bash-completion/completions/aptkeyman"
-            printf "Symlinks installed under %s\n" "$prefix"
-        '''.format(get_option('prefix'), bindir, datadir, mandir),
+        meson.project_source_root() / 'scripts' / 'install-symlinks.sh',
+        meson.project_source_root(),
+        meson.project_build_root(),
     ],
 )
 
@@ -150,20 +205,8 @@ run_target(
     'uninstall-symlinks',
     command: [
         'bash',
-        '-euc', '''
-            prefix="@0@"
-            bindir="@1@"
-            datadir="@2@"
-            mandir="@3@"
-            for p in "$bindir/aptkeyman" "$mandir/man1/aptkeyman.1" "$datadir/bash-completion/completions/aptkeyman"
-            do
-                if [ -L "$p" ]; then
-                    sudo rm -f "$p"
-                    printf "Removed %s\n" "$p"
-                else
-                    printf "Skipped (not a symlink): %s\n" "$p"
-                fi
-            done
-        '''.format(get_option('prefix'), bindir, datadir, mandir),
+        meson.project_source_root() / 'scripts' / 'uninstall-symlinks.sh',
+        meson.project_source_root(),
+        meson.project_build_root(),
     ],
 )

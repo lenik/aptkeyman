@@ -1,18 +1,22 @@
 Source: aptkeyman
-Section: utils
+Section: admin
 Priority: optional
 Maintainer: Lenik <aptkeyman@bodz.net>
-Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3, gettext, asciidoctor
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, python3, gettext, asciidoctor, gnupg
 Standards-Version: 4.6.0
 Homepage: https://github.com/lenik/aptkeyman
 Rules-Requires-Root: no
 
 Package: aptkeyman
 Architecture: any
-Depends: 
-    python3, 
+Depends:
+    python3,
+    gnupg,
     ${misc:Depends}
-Description: Meson-based CLI project template with example app
- aptkeyman is a template repository for small Python command-line utilities.
- It currently ships the aptkeyman example application and Debian packaging
- metadata, and includes Python unittest integration.
+Suggests:
+    python3-wxgtk4.0
+Description: manage third-party APT OpenPGP keys
+ aptkeyman seeds a local SQLite database of repository signing keys from
+ well-known publishers, /usr/share/keyrings, /etc/apt/keyrings, and
+ apt-get update missing-key diagnostics. Commands download, update, and
+ verify keyring files so apt-get update succeeds for configured sources.

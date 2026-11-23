@@ -1,0 +1,95 @@
+{
+  "version": 3,
+  "keys": [
+    {
+      "name": "github-cli",
+      "server": "cli.github.com/*",
+      "fingerprint": "7F38BBB59D064DBCB3D84D725612B36462313325",
+      "keyurl": "https://cli.github.com/packages/githubcli-archive-keyring.gpg",
+      "keyfile": "githubcli-archive-keyring.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "GitHub CLI apt repository"
+    },
+    {
+      "name": "microsoft",
+      "server": "*.microsoft.com/*",
+      "fingerprint": "AA86F75E427A19DD33346403EE4D7792F748182B",
+      "keyurl": "https://packages.microsoft.com/keys/microsoft-2025.asc",
+      "keyfile": "microsoft.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "Microsoft packages (packages.microsoft.com; Debian 13+ / 2025 signer)"
+    },
+    {
+      "name": "microsoft-legacy",
+      "server": "*.microsoft.com/*",
+      "fingerprint": "BC528686B50D79E339D3721CEB3E94ADBE1229CF",
+      "keyurl": "https://packages.microsoft.com/keys/microsoft.asc",
+      "keyfile": "microsoft-legacy.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "Microsoft Release signing (2015; older product repos)"
+    },
+    {
+      "name": "docker",
+      "server": "download.docker.com/*",
+      "fingerprint": "9DC858229FC7DD38854AE2D88D81803C0EBFCD88",
+      "keyurl": "https://download.docker.com/linux/ubuntu/gpg",
+      "keyfile": "docker.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "Docker CE apt repository"
+    },
+    {
+      "name": "google-linux",
+      "server": "dl.google.com/*",
+      "fingerprint": "EB4C1BFD4F042F6DDDCCEC917721F63BD38B4796",
+      "keyurl": "https://dl.google.com/linux/linux_signing_key.pub",
+      "keyfile": "google-linux.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "Google Chrome / Google Linux packages"
+    },
+    {
+      "name": "nodesource",
+      "server": "deb.nodesource.com/*",
+      "fingerprint": "6F71F525282841EEDAF851B42F59B5F99B1BE0B4",
+      "keyurl": "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key",
+      "keyfile": "nodesource.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "NodeSource Node.js repository"
+    },
+    {
+      "name": "intel-graphics",
+      "server": "repositories.intel.com/*",
+      "fingerprint": "E0258B57D9C442D5DB1855C271740E4DE392BFE3",
+      "keyurl": "https://repositories.intel.com/gpu/intel-graphics.key",
+      "keyfile": "intel-graphics.gpg",
+      "state": "accepted",
+      "proxy_mode": "always",
+      "notes": "Intel GPU apt repository"
+    },
+    {
+      "name": "apt-fast",
+      "server": "ppa.launchpad.net/apt-fast/*",
+      "fingerprint": "BC5934FD3DEBD4DAEA544F791E2824A7F22B44BD",
+      "keyurl": "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xBC5934FD3DEBD4DAEA544F791E2824A7F22B44BD",
+      "keyfile": "apt-fast.gpg",
+      "state": "accepted",
+      "proxy_mode": "auto",
+      "notes": "apt-fast Launchpad PPA"
+    },
+    {
+      "name": "graphics-drivers",
+      "server": "ppa.launchpad.net/graphics-drivers/*",
+      "fingerprint": "2388FF3BE10A76F638F80723FCAE110B1118213C",
+      "keyurl": "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2388FF3BE10A76F638F80723FCAE110B1118213C",
+      "keyfile": "graphics-drivers.gpg",
+      "state": "accepted",
+      "proxy_mode": "auto",
+      "notes": "graphics-drivers Launchpad PPA"
+    }
+  ]
+}

@@ -1,5 +1,32 @@
+aptkeyman (0.0.2) unstable; urgency=medium
+
+  * wellknown: Microsoft 2025 signer (EE4D7792…); add graphics-drivers
+    PPA; keep microsoft-legacy.
+  * write_keyfile: stage under system tmp before installing to dest (no
+    sibling *.tmp under /usr/share/keyrings).
+  * Install keys to /etc/apt/keyrings by default; check
+    /usr/share/keyrings for freshness; rewrite Signed-By when migrating
+    outdated system keys.
+  * download/update: fetch keys concurrently (-j/--jobs).
+  * Honor http_proxy/https_proxy/no_proxy; add --proxy/--http-proxy/
+    --https-proxy/--no-proxy. Per-key proxy_mode column (auto|always|
+    never|URL); seed always for hosts typically blocked from China.
+  * update: keep local keydata when keyurl is empty (distro keyrings).
+  * update: always install refreshed keys under keyrings dir and rewrite
+    Signed-By; purge only deletes under keyrings dir (never /usr/share).
+  * seed: do not overwrite managed installed_path with vendor keyring paths.
+  * download/update: docker-pull style concurrent progress on stderr (-q
+    quiet); split fetch/progress/verify helpers out of aptkeyman_keys.
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 23 Nov 2026 20:00:00 +0900
+
 aptkeyman (0.0.1) unstable; urgency=medium
 
+  [ Lenik ]
   * Initial release
+
+  [ Lenik (谢继雷) ]
+  * Refactor as zephyr Python package with
+    seed/download/update/verify/export/import/gui.
 
  -- Lenik <zephyr@bodz.net>  Mon, 23 Nov 2026 17:34:50 +0900

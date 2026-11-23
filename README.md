@@ -1,128 +1,70 @@
 # aptkeyman
 
-`aptkeyman` is a Python + Meson project template for small command-line apps.
-`aptkeyman` is one **example app** in this template; more apps can be added in the same repository.
-
-## Repository layout
-
-- `src/` - Python sources (`aptkeyman.py` example app and `commons.py` shared helpers)
-- `tests/` - Python unit tests (`unittest`)
-- `debian/` - Debian packaging metadata
-- `po/` - gettext message catalogs
-- `man/` - AsciiDoc man page sources (`man/*.adoc`)
-- `meson.build` - install rules, tests, and helper targets
-
-## Example app: `aptkeyman`
-
-`aptkeyman` is a cat-like utility:
+Prepare third-party APT OpenPGP keys **before** `apt-get update`.
 
 ```bash
-aptkeyman [OPTION]... [FILE]...
+aptkeyman seed --apt-update          # or: --apt-log /path/to/apt-update.log
+sudo aptkeyman download
+sudo apt-get update
 ```
 
-- If no `FILE` is provided, it reads from `stdin`.
-- If a `FILE` is `-`, it reads from `stdin` at that position.
-- Output is written to `stdout`.
+Zephyr-style Python + Meson CLI (AGPL-3.0-or-later).
 
-Supported options:
+## Why
 
-- `-v`, `--verbose`
-- `-q`, `--quiet`
-- `-h`, `--help`
-- `--version`
+HTTPS only authenticates the host. APT still needs repository signing keys on
+disk (`Signed-By=` / keyrings). Distros do not auto-trust every vendor.
+`aptkeyman` keeps a local fact DB, seeds it from local keyrings and
+`apt-get update` “Missing key …” errors, and installs keys under
+`/etc/apt/keyrings`. It treats `/usr/share/keyrings` as read-only: if a
+source’s `Signed-By` there is missing or outdated, the key is written to
+`/etc/apt/keyrings` and the sources file is rewritten to match.
 
-## Build and test
+## Commands
 
-### Build dependencies (Debian example)
+| Command | Purpose |
+|---------|---------|
+| `download` | Install missing keys used by sources lists |
+| `update` | Refresh those keys; purge unused managed key files |
+| `verify` | Check installed keyrings vs DB fingerprints |
+| `seed` | Seed from wellknown + `/usr/share/keyrings` + apt misses |
+| `scan` / `list` / `show` | Inspect sources and facts |
+| `accept` / `deny` / `add` / `fetch` | Manage trust state |
+| `export` / `import` | JSON dump / merge |
+| `gui` | wxPython UI |
+| `version` | Version |
+
+## Build
 
 ```bash
-sudo apt install meson ninja-build python3 gettext asciidoctor
-```
-
-### Configure and build
-
-Use the absolute build directory `/build`:
-
-```bash
+sudo apt install meson ninja-build python3 gettext asciidoctor gnupg
 meson setup /build
 ninja -C /build
-```
-
-### Run tests
-
-```bash
 meson test -C /build
+sudo ninja -C /build install
+# or: ninja -C /build install-symlinks
 ```
 
-Meson runs `python3 -m unittest discover` against `tests/test_*.py`.
+Build downloads well-known key blobs into `aptkeyman.db` (and can seed from
+local keyrings via `--seed-keyrings` in `scripts/build_db.py`).
 
-## i18n (gettext)
+Optional GUI: `sudo apt install python3-wxgtk4.0`
 
-`aptkeyman` uses gettext translations under `po/` (`*.po` + generated `.mo` files).
+## Database fields
 
-Aptkeyman style recommends `po/LINGUAS` cover at least: **ar bn de es fr hi id it
-ja ko pt ru sv ta te th tr ur vi zh_CN zh_TW** (English is the msgid source;
-`zh-cn`/`zh-tw` map to `zh_CN`/`zh_TW`).
+`name`, `server` (URL pattern), `fingerprint`, `keyurl`, `keyfile`, `keydata`,
+`state` (`new`/`accepted`/`denied`), `origin` (`wellknown`/`keyring`/`apt-miss`/…),
+`installed_path`, `managed`, `proxy_mode`
+(`auto` / empty, `always`, `never`, or an explicit `scheme://host:port`).
 
-- Installed runtime loads translations from system locale dir.
-- Dev runtime (`/build/aptkeyman`) prefers project-local translations from `/build/po` if present.
-
-### Sync translation catalogs
-
-Use `posync` to update catalogs from current source strings:
-
-```bash
-ninja -C /build posync
-```
-
-`posync` will:
-
-- add missing messages into each language from `po/LINGUAS`
-- remove obsolete messages no longer used in source
-
-### Build translation files
-
-```bash
-ninja -C /build
-```
-
-### Quick locale testing
-
-Prefer `LANGUAGE=<lang>` for predictable gettext selection in dev shells:
-
-```bash
-LANGUAGE=ja /build/aptkeyman -h
-LANGUAGE=zh_CN /build/aptkeyman -h
-```
-
-`LANG=<lang>.<encoding>` may depend on whether that locale is generated on your system.
-
-## Install / symlink helpers
-
-Normal install:
-
-```bash
-meson install -C /build
-```
-
-Debug symlink workflow (under configured prefix):
-
-```bash
-ninja -C /build install-symlinks
-ninja -C /build uninstall-symlinks
-```
-
-## Debian package
-
-```bash
-dpkg-buildpackage -us -uc
-```
+Downloads honor `http_proxy` / `https_proxy` / `no_proxy` (and
+`--proxy` / `--http-proxy` / `--https-proxy` / `--no-proxy`). Use
+`-j` / `--jobs` for concurrent fetches (default 8).
 
 ## License
 
-Copyright (C) 2026 Lenik <aptkeyman@bodz.net>
+Copyright (C) 2026 Lenik \<aptkeyman@bodz.net\>
 
-Licensed under **AGPL-3.0-or-later**.  
-This project explicitly opposes AI exploitation and AI hegemony, and rejects
-mindless MIT-style licensing and politically naive BSD-style licensing.  
-See `LICENSE` for the full text and supplemental project terms.
+Licensed under **AGPL-3.0-or-later**.
+This project opposes AI exploitation and AI hegemony, and rejects mindless
+MIT-style licensing and politically naive BSD-style licensing.
