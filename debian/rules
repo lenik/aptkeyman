@@ -1,4 +1,10 @@
 #!/usr/bin/make -f
 
+# Key DB blobs are fetched at build time; many vendors need a local proxy.
+export http_proxy ?= http://localhost:8118
+export https_proxy ?= $(http_proxy)
+export HTTP_PROXY ?= $(http_proxy)
+export HTTPS_PROXY ?= $(https_proxy)
+
 %:
 	dh $@ --buildsystem=meson --builddirectory=debian/build

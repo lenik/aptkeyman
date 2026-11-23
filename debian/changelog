@@ -4,6 +4,8 @@ aptkeyman (0.0.3) unstable; urgency=medium
     2025 key only for debian/13+ as microsoft-2025.gpg.
   * patterns: prefer more-specific server patterns when multiple keys
     match.
+  * debian/rules: export localhost:8118 proxy so build-time wellknown
+    key downloads succeed.
 
  -- Lenik (谢继雷) <lenik@bodz.net>  Mon, 23 Nov 2026 21:05:48 +0900
 
